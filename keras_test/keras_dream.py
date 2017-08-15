@@ -44,8 +44,8 @@ result_prefix = args.result_prefix
 settings = {
     'features': {
         'conv2d_3': 1.0,
-        'ddblock4_conv3': 1.0,
-        'block2_pool': 2.0,
+        'block5_conv3': 1.0,
+        'ddblock2_pool': 2.0,
         'mixed2': 0.2,
         'mixed3': 0.5,
         'mixed4': 2.,
@@ -66,7 +66,8 @@ def preprocess_image(image_path):
 
     print(img.shape[0])
     img = np.expand_dims(img, axis=0)
-    img = preprocess_input(img)
+    print(img.shape)
+    img = inception_v3.preprocess_input(img)
     return img
 
 
@@ -107,6 +108,7 @@ for layer_name in bad_layers_names :
     del settings['features'][layer_name]
 
 # http://blog.csdn.net/a200800170331/article/details/21737741
+# https://sherlockliao.github.io/2017/07/23/deep_dream_code/
 # Define the loss.
 loss = K.variable(0.)
 for layer_name in settings['features']:

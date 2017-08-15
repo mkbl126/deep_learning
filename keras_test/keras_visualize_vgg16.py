@@ -21,7 +21,7 @@ import cv2  # only used for loading the image, you can use anything that returns
 
 # In[77]:
 
-cat_img = cv2.imread('cat_blue.png')
+cat_img = cv2.imread('..\image\cat_blue.png')
 
 
 # In[78]:

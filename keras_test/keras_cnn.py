@@ -24,7 +24,6 @@ from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D, ZeroPadding2D
 from keras.optimizers import SGD, Adadelta, Adagrad, Adam
 from keras.utils.vis_utils import plot_model
-from keras.utils.data_utils import get_file
 
 import keras_data
 
@@ -171,27 +170,21 @@ def LeNet5old(X_train, Y_train, X_test, Y_test, input_shape, num_classes, model_
     # Layer 1, conv
     model.add(Conv2D(6, (5, 5), strides=(1, 1), padding='same', activation=model_activation, input_shape=init_shape))
     # model.add(Activation(model_activation))
-
     # Layer 2, pooling
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
     # Layer 3, conv
     model.add(Conv2D(16, (5, 5), strides=(1, 1), padding='valid', activation=model_activation))
     # model.add(Activation(model_activation))
-
     # Layer 4, pooling
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
     # Layer 5, conv
     model.add(Conv2D(120, (5, 5), strides=(1, 1), padding='valid', activation=model_activation))
     # model.add(Activation(model_activation))
-
     # Layer 6, full
     model.add(Flatten())
     model.add(Dense(84, kernel_initializer='normal', activation=model_activation))
     # model.add(Activation(model_activation))
     model.add(Dropout(0.25))
-
     # Layer 7, full
     model.add(Dense(num_classes, kernel_initializer='normal'))
     model.add(Activation('softmax'))
@@ -264,8 +257,8 @@ def AlexNet(X_train, Y_train, X_test, Y_test, input_shape, num_classes, model_ba
 
     #使用SGD + momentum
     #model.compile里的参数loss就是损失函数(目标函数)
-    sgd = SGD(lr=0.001, decay=1e-6, momentum=0.9, nesterov=True)
-    # adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+    sgd = SGD(lr=0.002, decay=1e-6, momentum=0.9, nesterov=True)
+    # adam = Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
     model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
     print model.summary()
     plot_model(model, to_file='AlexNet.png')
@@ -278,6 +271,7 @@ def AlexNet(X_train, Y_train, X_test, Y_test, input_shape, num_classes, model_ba
     print "AVERAGE ACCRUACY", score[1]
     end_time = time.time()
     print ">> WORKING TIME(s): %5.3f\n" % (end_time - begin_time)
+    model.save_weights('alexnet_weights_th_dim_ordering_th_kernels.h5')
     return
 
 ###################################################################
@@ -455,18 +449,18 @@ def VGG19(X_train, Y_train, X_test, Y_test, input_shape, num_classes, model_batc
 if __name__ == "__main__":
     #print os.environ['PATH']
     batch_size = 200
-    epochs = 12
+    epochs = 36
     activation = 'relu'
     # X_train, y_train, X_test, y_test = keras_data.load_mnist_as_int()
     # # GNN(X_train, y_train, X_test, y_test, batch_size, epochs, 'tanh')
 
-    X_train, Y_train, X_test, Y_test, init_shape, num_classes = keras_data.load_mnist()
-    #X_train, Y_train, X_test, Y_test, init_shape, num_classes = keras_data.load_cifar10()
+    # X_train, Y_train, X_test, Y_test, init_shape, num_classes = keras_data.load_mnist()
+    X_train, Y_train, X_test, Y_test, init_shape, num_classes = keras_data.load_cifar10()
 
     print init_shape
     # CNN(X_train, y_train, X_test, y_test, init_shape, batch_size, epochs, activation)
-    LeNet5(X_train, Y_train, X_test, Y_test, init_shape, num_classes, batch_size, epochs, activation)
-    # AlexNet(X_train, Y_train, X_test, Y_test, init_shape, num_classes, batch_size, epochs, activation)
+    # LeNet5(X_train, Y_train, X_test, Y_test, init_shape, num_classes, batch_size, epochs, activation)
+    AlexNet(X_train, Y_train, X_test, Y_test, init_shape, num_classes, batch_size, epochs, activation)
     # VGG16(X_train, Y_train, X_test, Y_test, init_shape, num_classes, batch_size, epochs, activation)
 
 """

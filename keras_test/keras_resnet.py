@@ -65,7 +65,7 @@ def IdentityBlock(input, kernels0, model_activation) :
     return output
 
 def ResNet_cifar10(X_train, Y_train, X_test, Y_test, input_shape, num_classes, model_batch_size, model_epochs, model_activation) :
-    print '>> ResNet_cifar10 TRAINT AND TEST'
+    print('>> ResNet_cifar10 TRAINT AND TEST')
     size_1 = (1, 1)
     strides_1 = (1, 1)
     size_3 = (3, 3)
@@ -125,17 +125,17 @@ def ResNet_cifar10(X_train, Y_train, X_test, Y_test, input_shape, num_classes, m
 
     begin_time = time.time()
     hinst = model.fit(X_train, Y_train, batch_size=model_batch_size, epochs=model_epochs, shuffle=True, verbose=1, validation_split=0.2)
-    print '>> TEST'
+    print('>> TEST')
     score = model.evaluate(X_test, Y_test, batch_size=model_batch_size, verbose=1)
-    print "SCORE", score[0]
-    print "AVERAGE ACCRUACY", score[1]
+    print("SCORE", score[0])
+    print("AVERAGE ACCRUACY", score[1])
     end_time = time.time()
-    print ">> WORKING TIME(s): %5.3f\n" % (end_time - begin_time)
+    print(">> WORKING TIME(s): %5.3f\n" % (end_time - begin_time))
     return
 
 
 def ResNet50_ImageNet(X_train, Y_train, X_test, Y_test, input_shape, num_classes, model_batch_size, model_epochs, model_activation) :
-    print '>> ResNet50 TRAINT AND TEST'
+    print('>> ResNet50 TRAINT AND TEST')
     size_1 = (1, 1)
     strides_1 = (1, 1)
     size_3 = (3, 3)
@@ -206,12 +206,12 @@ def ResNet50_ImageNet(X_train, Y_train, X_test, Y_test, input_shape, num_classes
 
     begin_time = time.time()
     hinst = model.fit(X_train, Y_train, batch_size=model_batch_size, epochs=model_epochs, shuffle=True, verbose=1, validation_split=0.2)
-    print '>> TEST'
+    print('>> TEST')
     score = model.evaluate(X_test, Y_test, batch_size=model_batch_size, verbose=1)
-    print "SCORE", score[0]
-    print "AVERAGE ACCRUACY", score[1]
+    print("SCORE", score[0])
+    print("AVERAGE ACCRUACY", score[1])
     end_time = time.time()
-    print ">> WORKING TIME(s): %5.3f\n" % (end_time - begin_time)
+    print(">> WORKING TIME(s): %5.3f\n" % (end_time - begin_time))
     return
 
 ###################################################################

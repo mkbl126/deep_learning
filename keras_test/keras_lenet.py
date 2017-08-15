@@ -1,22 +1,6 @@
 # coding=utf-8
 
-"""
-    GPU run command:
-        THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python cnn.py
-    CPU run command:
-        python cnn.py
-"""
-
-# import theano
-# theano.config.device = 'gpu'
-# theano.config.floatX = 'float32'
-
 import os
-# os.environ['THEANO_FLAGS'] = "device=gpu,floatX=float32"
-
-import time
-import random
-import numpy as np
 
 from keras.models import Model, Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten, InputLayer, Merge, Input
@@ -26,8 +10,10 @@ from keras.utils.vis_utils import plot_model
 from keras.utils import layer_utils
 from keras import backend as K
 
-def LeNet5(include_top=True) :
-    print '>> LeNet5 MODEL'
+###################################################################
+
+def LeNet5(include_top=True, model_folder=r'.\model') :
+    print('>> LeNet5 MODEL. Input shape = (1, 28, 28)')
     model_activation = 'relu'
     num_classes = 10
     init_shape = (1, 28, 28)
@@ -47,7 +33,6 @@ def LeNet5(include_top=True) :
 
     model = Model(inputs, x, name='LeNet5')
 
-    model_folder = r'.\model'
     if include_top :
         weights_path = os.path.join(model_folder, 'lenet_weights_th_dim_ordering_th_kernels.h5')
     else:
@@ -55,7 +40,6 @@ def LeNet5(include_top=True) :
     model.load_weights(weights_path)
 
     if K.backend() == 'theano':
-        print 'theano'
         layer_utils.convert_all_kernels_in_model(model)
 
     # if K.image_data_format() == 'channels_first':
@@ -75,8 +59,10 @@ def LeNet5(include_top=True) :
 
     return model
 
+###################################################################
+
 def LeNet5_old(include_top=True) :
-    print '>> LeNet5 MODEL old'
+    print('>> LeNet5 MODEL old. Input shape = (1, 28, 28)')
     model = Sequential()
     model_activation = 'relu'
     num_classes = 10
@@ -85,17 +71,13 @@ def LeNet5_old(include_top=True) :
     # Layer 1, conv
     model.add(Conv2D(6, (5, 5), strides=(1, 1), padding='same', activation=model_activation, input_shape=init_shape))
     # model.add(Activation(model_activation))
-
     # Layer 2, pooling
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
     # Layer 3, conv
     model.add(Conv2D(16, (5, 5), strides=(1, 1), padding='valid', activation=model_activation))
     # model.add(Activation(model_activation))
-
     # Layer 4, pooling
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
     # Layer 5, conv
     model.add(Conv2D(120, (5, 5), strides=(1, 1), padding='valid', activation=model_activation))
     # model.add(Activation(model_activation))
@@ -117,6 +99,9 @@ def LeNet5_old(include_top=True) :
         weights_path = 'lenet_weights_th_dim_ordering_th_kernels_notop.h5'
     model.load_weights(weights_path)
 
+    if K.backend() == 'theano':
+        layer_utils.convert_all_kernels_in_model(model)
+
     #使用SGD + momentum
     #model.compile里的参数loss就是损失函数(目标函数)
     # sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
@@ -125,3 +110,5 @@ def LeNet5_old(include_top=True) :
     # plot_model(model, to_file='keras_LeNet5.png')
 
     return model
+
+###################################################################

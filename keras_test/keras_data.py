@@ -28,7 +28,7 @@ def load_cifar100() :
     num_classes = 100
     Y_train = utils.to_categorical(Y_train, num_classes)
     Y_test = utils.to_categorical(Y_test, num_classes)
-    print ">> LOADED cifar10 -> X_train(%d), X_test(%d), Y_train(%d), Y_test(%d) Shape%s" % (len(X_train), len(X_test), len(Y_train), len(Y_test), init_shape)
+    print(">> LOADED cifar10 -> X_train(%d), X_test(%d), Y_train(%d), Y_test(%d) Shape%s" % (len(X_train), len(X_test), len(Y_train), len(Y_test), init_shape))
     return X_train, Y_train, X_test, Y_test, init_shape, num_classes
 
 def load_cifar10() :
@@ -47,7 +47,7 @@ def load_cifar10() :
     num_classes = 10
     Y_train = utils.to_categorical(Y_train, num_classes)
     Y_test = utils.to_categorical(Y_test, num_classes)
-    print ">> LOADED cifar10 -> X_train(%d), X_test(%d), Y_train(%d), Y_test(%d) Shape%s" % (len(X_train), len(X_test), len(Y_train), len(Y_test), init_shape)
+    print(">> LOADED cifar10 -> X_train(%d), X_test(%d), Y_train(%d), Y_test(%d) Shape%s" % (len(X_train), len(X_test), len(Y_train), len(Y_test), init_shape))
     return X_train, Y_train, X_test, Y_test, init_shape, num_classes
 
 def load_mnist() :
@@ -56,7 +56,7 @@ def load_mnist() :
     # reshape data into 28*28=784
     img_rows = 28
     img_cols = 28
-    print X_train.shape
+    print(X_train.shape)
     if K.image_data_format() == 'channels_first':
         X_train = X_train.reshape(X_train.shape[0], 1, img_rows, img_cols)
         X_test = X_test.reshape(X_test.shape[0], 1, img_rows, img_cols)
@@ -75,7 +75,7 @@ def load_mnist() :
     num_classes = 10
     Y_train = utils.to_categorical(Y_train, num_classes)
     Y_test = utils.to_categorical(Y_test, num_classes)
-    print ">> LOADED mnist -> X_train(%d), X_test(%d), Y_train(%d), Y_test(%d) Shape%s" % (len(X_train), len(X_test), len(Y_train), len(Y_test), init_shape)
+    print(">> LOADED mnist -> X_train(%d), X_test(%d), Y_train(%d), Y_test(%d) Shape%s" % (len(X_train), len(X_test), len(Y_train), len(Y_test), init_shape))
     return X_train, Y_train, X_test, Y_test, init_shape, num_classes
 
 def load_mnist_as_int() :
@@ -91,7 +91,7 @@ def load_mnist_as_int() :
     # transfor index into one-hot matrix
     Y_train = (np.arange(10) == y_train[:, None]).astype(int)
     Y_test = (np.arange(10) == y_test[:, None]).astype(int)
-    print ">> LOADED DATA -> X_train(%d), Y_train(%d), X_test(%d), Y_test(%d)" % (len(X_train), len(Y_train), len(X_test), len(Y_test))
+    print(">> LOADED DATA -> X_train(%d), Y_train(%d), X_test(%d), Y_test(%d)" % (len(X_train), len(Y_train), len(X_test), len(Y_test)))
     return X_train, Y_train, X_test, Y_test
     
 def load_minist_image():
@@ -111,7 +111,7 @@ def load_minist_image():
         data /= np.max(data)
         data -= np.mean(data)
         if i % 100==0 :
-            print i
+            print(i)
         if i>100 :
             break
     return data,label
